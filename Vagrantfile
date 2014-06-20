@@ -24,7 +24,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provision "docker" do |d|
     d.pull_images "ubuntu"
 
-    d.run "mysql", image: "mysql", args: "-e MYSQL_ROOT_PASSWORD=root -p 3306:3306"
+    d.run "mysql", image: "tutum/mysql", args: "-e MYSQL_PASS=admin -p 3306:3306"
     d.run "mongodb", image: "dockerfile/mongodb", args: "-p 27017:27017 -p 28017:28017"
     d.run "rabbitmq", image: "tutum/rabbitmq", args: "-p 5672:5672 -p 15672:15672 -e RABBITMQ_PASS=\"admin\""
     d.run "redis", image: "dockerfile/redis", args: "-p 6379:6379"

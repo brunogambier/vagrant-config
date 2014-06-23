@@ -18,7 +18,7 @@
     - name: accept java license
       debconf: name='oracle-java8-installer' question='shared/accepted-oracle-license-v1-1' value='true' vtype='select'
 
-    - name: install java 7
+    - name: install java 8
       apt: name=oracle-java8-installer update_cache=yes state=present
 
     - name: install packages
@@ -66,3 +66,10 @@
 
     - name: symlink phantomjs
       file: src=/opt/phantomjs/bin/phantomjs dest=/usr/bin/phantomjs state=link
+
+    - name: add nodejs repo
+      apt_repository: repo='ppa:chris-lea/node.js' state=present
+
+    - name: install nodejs
+      apt: name={{item}} update_cache=yes state=present
+      with_items: [python-software-properties, python, g++, make, nodejs]

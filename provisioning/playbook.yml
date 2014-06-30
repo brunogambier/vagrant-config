@@ -18,12 +18,13 @@
     - name: accept java license
       debconf: name='oracle-java8-installer' question='shared/accepted-oracle-license-v1-1' value='true' vtype='select'
 
-    - name: install java 8
-      apt: name=oracle-java8-installer update_cache=yes state=present
+    - name: install java 7/8
+      apt: name={{item}} update_cache=yes state=present
+      with_items: [oracle-java8-installer, oracle-java7-installer]
 
     - name: install packages
       apt: name={{item}} state=present
-      with_items: [vim, tmux, python-pip, unzip, mysql-client, libfontconfig, libmysqlclient-dev]
+      with_items: [vim, tmux, python-pip, unzip, mysql-client, libfontconfig, libmysqlclient-dev, mercurial]
 
     - name: download maven
       get_url: url=http://ftp.unicamp.br/pub/apache/maven/maven-3/3.2.1/binaries/apache-maven-3.2.1-bin.tar.gz dest=/opt/

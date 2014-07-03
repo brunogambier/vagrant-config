@@ -74,3 +74,8 @@
     - name: install nodejs
       apt: name={{item}} update_cache=yes state=present
       with_items: [python-software-properties, python, g++, make, nodejs]
+
+    - name: download go-lang
+      get_url: url=http://golang.org/dl/go1.3.linux-amd64.tar.gz dest=/opt/
+
+    - unarchive: src=/opt/go1.3.linux-amd64.tar.gz dest=/opt/ copy=no

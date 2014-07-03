@@ -1,0 +1,5 @@
+---
+  phantomjs_download_url: https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-1.9.7-linux-x86_64.tar.bz2
+  phantomjs_download_sha256: 473b19f7eacc922bc1de21b71d907f182251dd4784cb982b9028899e91dcb01a
+  phantomjs_filename: phantomjs-1.9.7-linux-x86_64.tar.bz2
+  phantomjs_dir: phantomjs-1.9.7-linux-x86_64

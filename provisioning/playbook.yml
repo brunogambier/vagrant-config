@@ -1,43 +1,16 @@
 ---
 - hosts: all
   sudo: yes
+  roles:
+    - base-packages
+    - rvm
+    - oracle-jdk
+    - maven
+    - golang
+    - phantomjs
+    - nodejs
+
   tasks:
-    - name: install rvm
-      shell: curl -L https://get.rvm.io | bash -s stable creates=/home/vagrant/.rvm
-      sudo: no
-
-    - name: add java repo keys
-      apt_key: keyserver=keyserver.ubuntu.com id=EEA14886 state=present
-
-    - name: add java repo
-      apt_repository: repo='deb http://ppa.launchpad.net/webupd8team/java/ubuntu precise main' state=present
-
-    - name: add java sources repo
-      apt_repository: repo='deb-src http://ppa.launchpad.net/webupd8team/java/ubuntu precise main' state=present
-
-    - name: accept java license
-      debconf: name='oracle-java8-installer' question='shared/accepted-oracle-license-v1-1' value='true' vtype='select'
-
-    - name: install java 7/8
-      apt: name={{item}} update_cache=yes state=present
-      with_items: [oracle-java8-installer, oracle-java7-installer]
-
-    - name: install packages
-      apt: name={{item}} state=present
-      with_items: [vim, tmux, python-pip, unzip, mysql-client, libfontconfig, libmysqlclient-dev, mercurial]
-
-    - name: download maven
-      get_url: url=http://ftp.unicamp.br/pub/apache/maven/maven-3/3.2.1/binaries/apache-maven-3.2.1-bin.tar.gz dest=/opt/
-
-    - name: unarchive maven
-      unarchive: src=/opt/apache-maven-3.2.1-bin.tar.gz dest=/opt/ copy=no
-
-    - name: symlink maven dir
-      file: src=/opt/apache-maven-3.2.1 dest=/opt/maven state=link
-
-    - name: symlink maven bin
-      file: src=/opt/maven/bin/mvn dest=/usr/bin/mvn state=link
-
     - name: add mysql client config
       template: src=templates/my.cnf dest=/etc/my.cnf owner=root group=root mode=644
 
@@ -55,27 +28,3 @@
 
     - name: symlink eb tool
       file: src=/opt/eb/eb/linux/python2.7/eb dest=/usr/bin/eb state=link
-
-    - name: download phantomjs
-      get_url: url=https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-1.9.7-linux-x86_64.tar.bz2 dest=/opt/ sha256sum=473b19f7eacc922bc1de21b71d907f182251dd4784cb982b9028899e91dcb01a
-
-    - name: unarchive phantomjs
-      unarchive: src=/opt/phantomjs-1.9.7-linux-x86_64.tar.bz2 dest=/opt/ copy=no
-
-    - name: symlink phantomjs dir
-      file: src=/opt/phantomjs-1.9.7-linux-x86_64 dest=/opt/phantomjs state=link
-
-    - name: symlink phantomjs
-      file: src=/opt/phantomjs/bin/phantomjs dest=/usr/bin/phantomjs state=link
-
-    - name: add nodejs repo
-      apt_repository: repo='ppa:chris-lea/node.js' state=present
-
-    - name: install nodejs
-      apt: name={{item}} update_cache=yes state=present
-      with_items: [python-software-properties, python, g++, make, nodejs]
-
-    - name: download go-lang
-      get_url: url=http://golang.org/dl/go1.3.linux-amd64.tar.gz dest=/opt/
-
-    - unarchive: src=/opt/go1.3.linux-amd64.tar.gz dest=/opt/ copy=no

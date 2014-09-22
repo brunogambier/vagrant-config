@@ -28,6 +28,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     d.run "mongodb", image: "dockerfile/mongodb", args: "-p 27017:27017 -p 28017:28017"
     d.run "rabbitmq", image: "tutum/rabbitmq", args: "-p 5672:5672 -p 15672:15672 -e RABBITMQ_PASS=\"admin\""
     d.run "redis", image: "dockerfile/redis", args: "-p 6379:6379"
+    d.run "postgres", image: "postgres", args: "-p 5432:5432"
   end
 
   config.vm.synced_folder ".", "/vagrant", type: "nfs"
@@ -41,7 +42,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     vb.customize ["modifyvm", :id, "--memory", "2048"]
   end
 
+  config.vm.network "forwarded_port", guest: 3000, host: 3000
   config.vm.network "forwarded_port", guest: 3306, host: 3306
+  config.vm.network "forwarded_port", guest: 5432, host: 5432
   config.vm.network "forwarded_port", guest: 5672, host: 5672
   config.vm.network "forwarded_port", guest: 6379, host: 6379
   config.vm.network "forwarded_port", guest: 8080, host: 8080

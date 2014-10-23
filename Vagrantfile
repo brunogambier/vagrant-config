@@ -11,7 +11,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # please see the online documentation at vagrantup.com.
 
   # Every Vagrant virtual environment requires a box to build off of.
-  config.vm.box = "precise64"
+  config.vm.box = "ubuntu/trusty64"
 
   config.vm.network "private_network", ip: "192.168.50.4"
 
@@ -32,10 +32,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
   config.vm.synced_folder ".", "/vagrant", type: "nfs"
-  config.vm.synced_folder "/Users/rodrigosaito/dev", "/home/vagrant/dev", type: "nfs"
-  config.vm.synced_folder "/Users/rodrigosaito/moip", "/home/vagrant/moip", type: "nfs"
-  config.vm.synced_folder "/Users/rodrigosaito/.m2", "/home/vagrant/.m2", type: "nfs"
-  config.vm.synced_folder "/Users/rodrigosaito/.ssh", "/home/vagrant/ssh", type: "nfs"
+  config.vm.synced_folder "/Users/brunogambier/Documents/dev", "/home/vagrant/dev", type: "nfs"
+  config.vm.synced_folder "/Users/brunogambier/Documents/dev/moip", "/home/vagrant/moip", type: "nfs"
+  config.vm.synced_folder "/Users/brunogambier/.m2", "/home/vagrant/.m2", type: "nfs"
+  config.vm.synced_folder "/Users/brunogambier/.ssh", "/home/vagrant/ssh", type: "nfs"
 
   config.vm.provider "virtualbox" do |vb|
     # Use VBoxManage to customize the VM. For example to change memory:
